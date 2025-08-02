@@ -1,12 +1,21 @@
-const NodeHelper = require("node_helper")
+const NodeHelper = require("node_helper");
+const { exec } = require("child_process");
+const path = require("path");
 
 module.exports = NodeHelper.create({
+  start() {
+    console.log("[MMM-ReflektCompanionSetup] Node helper started.");
 
-  async socketNotificationReceived(notification, payload) {
-    if (notification === "GET_RANDOM_TEXT") {
-      const amountCharacters = payload.amountCharacters || 10
-      const randomText = Array.from({ length: amountCharacters }, () => String.fromCharCode(Math.floor(Math.random() * 26) + 97)).join("")
-      this.sendSocketNotification("EXAMPLE_NOTIFICATION", { text: randomText })
-    }
+    const setupScript = path.join(__dirname, "scripts", "setup_ap.sh");
+    exec(`bash ${setupScript}`, (error, stdout, stderr) => {
+      if (error) {
+        console.error(`[MMM-ReflektCompanionSetup] Setup error: ${error.message}`);
+        return;
+      }
+      if (stderr) {
+        console.error(`[MMM-ReflektCompanionSetup] Setup stderr: ${stderr}`);
+      }
+      console.log(`[MMM-ReflektCompanionSetup] Setup stdout: ${stdout}`);
+    });
   },
-})
+});
