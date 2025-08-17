@@ -49,6 +49,7 @@ module.exports = NodeHelper.create({
     /******************************
     * Turn on the WiFi Access Point
     ******************************/
+    /*
     const setupScript = path.join(__dirname, "scripts", "setup_ap.sh");
     exec(`bash ${setupScript}`, (error, stdout, stderr) => {
       if (error) {
@@ -60,6 +61,7 @@ module.exports = NodeHelper.create({
       }
       console.log(`[MMM-ReflektCompanionSetup] Setup stdout: ${stdout}`);
     });
+    */
   },
 
   /**
